@@ -1,26 +1,209 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Helvetica Neue', sans-serif;
+  background: #050510;
+  color: white;
+  overflow: hidden;
+}
+
+/* Legend Box - Vaccine Visualizer Style */
+.legend-box {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: rgba(10, 10, 20, 0.92);
+  backdrop-filter: blur(12px);
+  padding: 16px 20px;
+  border-radius: 16px;
+  z-index: 1000;
+  border: 1px solid rgba(255, 75, 75, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  font-family: monospace;
+  min-width: 180px;
+}
+
+.legend-box h4 {
+  margin-bottom: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #ff6b6b;
+  letter-spacing: 1px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  font-size: 11px;
+  color: #ccc;
+}
+
+.legend-color {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+}
+
+.legend-color.extreme { 
+  background: #ff0000; 
+  box-shadow: 0 0 6px #ff0000; 
+}
+
+.legend-color.high { 
+  background: #ff4444; 
+}
+
+.legend-color.medium { 
+  background: #ff8800; 
+}
+
+.legend-color.low { 
+  background: #ffaa00; 
+}
+
+/* Info Panel - Top Left */
+.info-panel {
+  position: fixed;
+  top: 24px;
+  left: 24px;
+  background: rgba(10, 10, 20, 0.88);
+  backdrop-filter: blur(12px);
+  padding: 16px 24px;
+  border-radius: 16px;
+  z-index: 1000;
+  border: 1px solid rgba(255, 107, 107, 0.3);
+  pointer-events: none;
+}
+
+.info-panel h1 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  background: linear-gradient(135deg, #ffffff, #ff6b6b, #ff4444);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.info-panel .subtitle {
+  font-size: 11px;
+  color: #888;
+  letter-spacing: 0.5px;
+}
+
+/* Stats Panel - Bottom Left */
+.stats-panel {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  background: rgba(10, 10, 20, 0.88);
+  backdrop-filter: blur(12px);
+  padding: 12px 20px;
+  border-radius: 16px;
+  z-index: 1000;
+  border: 1px solid rgba(255, 107, 107, 0.2);
+  pointer-events: none;
+}
+
+.stat-number {
+  font-size: 28px;
+  font-weight: 800;
+  color: #ff6b6b;
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 10px;
+  color: #888;
+  letter-spacing: 0.5px;
+  margin-top: 2px;
+}
+
+/* Country Tooltip */
+.country-tooltip {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.92);
+  backdrop-filter: blur(16px);
+  color: white;
+  padding: 14px 20px;
+  border-radius: 12px;
+  font-size: 12px;
+  pointer-events: none;
+  z-index: 2000;
+  border: 1px solid rgba(255, 75, 75, 0.4);
+  font-family: monospace;
+  max-width: 280px;
+  line-height: 1.5;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.country-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: #ff6b6b;
+  margin-bottom: 8px;
+}
+
+/* Globe container */
+.globe-container {
+  width: 100vw;
+  height: 100vh;
+  cursor: pointer;
+}
+
+/* Loading screen */
+.loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #050510;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  font-family: monospace;
+}
+
+.loading-spinner {
+  width: 48px;
+  height: 48px;
+  border: 3px solid rgba(255, 107, 107, 0.2);
+  border-top-color: #ff6b6b;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a2e;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ff6b6b;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #ff4444;
 }
